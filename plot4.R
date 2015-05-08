@@ -9,11 +9,12 @@ unzip("EPC.zip")
 data <- read.table("household_power_consumption.txt", header = TRUE, sep = ";", na.strings = "?")
 
 # Subsetting data from the dates 2007-02-01 and 2007-02-02
-day2 <- data[66637:69516, ]
+library(dplyr)
+day2 <- data %>% filter(Date == "1/2/2007" | Date == "2/2/2007")
 
 # Combining date and time for plotting
-require(lubridate)
-datetime <- ymd_hms(paste(day2$Date, day2$Time))
+library(lubridate)
+datetime <- dmy_hms(paste(day2$Date, day2$Time))
 
 # Ploting Figure 4
 png(file = "plot4.png", width = 480, height = 480)
